@@ -1,0 +1,74 @@
+
+
+body {
+  margin: 0;
+  font-family: MicrosoftYaHei;
+  font-size: 14px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.panel {
+  background-color: #fff;
+  position: relative;
+  height: 100%;
+  min-height: 100vh;
+  margin: 0;
+  border: none;
+  box-shadow: none;
+  transform: translate3d(0,0,0);
+  overflow: hidden;
+
+  .ripple {
+    display: block;
+    position: absolute;
+    pointer-events: none;
+    border-radius: 50%;
+
+    -webkit-transform: scale(0);
+    -o-transform: scale(0);
+    transform: scale(0);
+
+    background: #5454DB;
+    //opacity: .8;
+
+
+    transition: none;
+  }
+  .ripple-animate {
+    opacity: 0 !important;
+    transform: scale(2);
+
+    transition: opacity 2s, transform 2s;
+  }
+
+
+  .control {
+    position: fixed;
+    right: 5vw;
+    bottom: 5vh;
+
+    > svg {
+      cursor: pointer;
+    }
+
+    > svg path {
+      transition: stroke .2s;
+    }
+
+    > svg:hover {
+      path {
+        stroke: rgba(0,0, 255, .75);
+      }
+    }
+
+    > svg:first-child {
+      transform: rotate(-180deg);
+      margin-right: 20px;
+
+
+    }
+  }
+}
