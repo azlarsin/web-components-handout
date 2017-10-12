@@ -13,7 +13,12 @@ class Ripple extends React.Component {
     }
 
     componentDidMount() {
+
+
         setTimeout(() => {
+
+            console.log(this.props.id);
+
             this.refs.d.classList.add("ripple-animate");
         }, 0);
     }
@@ -22,12 +27,15 @@ class Ripple extends React.Component {
         let { clearRipple } = this.context;
 
         clearRipple(this.props.id);
+
+        console.log("leave", this.props.id);
     }
 
     render() {
         let style = {
             ...this.props.style,
-            transitionDuration: 1.5 + Math.random() + 's'
+            // transitionDuration: Math.random() + 's',
+            // transitionTimingFunction: `cubic-bezier(${Math.random()},${Math.random()},${Math.random()},${Math.random()})`
         };
         return (
             <div className={ "ripple" } style={ style } onTransitionEnd={ this.handleRippleTransitionEnd } ref={"d"} />
