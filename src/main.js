@@ -50,6 +50,9 @@ class App extends React.Component {
 
         if(!arguments[1]) {
 
+            if(this.context.router.route.location.pathname !== '/') {
+                return ;
+            }
             size = window.screen.width; // max(container.size)
 
             rippleStyle.backgroundColor = "#" + (~~(Math.random()*(1<<24))).toString(16);
