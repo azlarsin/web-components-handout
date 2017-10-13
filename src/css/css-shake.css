@@ -1,0 +1,10 @@
+.shake-freeze,
+.shake-constant.shake-constant--hover:hover,
+.shake-trigger:hover .shake-constant.shake-constant--hover {
+  animation-play-state: paused; }
+
+.shake-freeze:hover,
+.shake-trigger:hover .shake-freeze {
+  animation-play-state: running; }
+
+/*# sourceMappingURL=css-shake.css.map */

@@ -3,6 +3,45 @@
  */
 
 import React from 'react';
+import { request } from '@/utils/Utils';
+
+
+class Counter extends React.Component {
+    constructor() {
+        super();
+
+        this.state = {
+            count: 0
+        };
+
+        this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick(type) {
+        if(type === 'plus') {
+            this.setState({
+                count: this.state.count + 1
+            });
+        }
+
+        if(type === 'minus') {
+            this.setState({
+                count: this.state.count - 1
+            });
+        }
+    }
+
+    render() {
+        return (
+            <div>
+                <p>{ this.state.count }</p>
+
+                <button onClick={ this.handleClick.bind(this, 'plus') }>+</button>
+                <button onClick={ this.handleClick.bind(this, 'minus') }>-</button>
+            </div>
+        )
+    }
+}
 
 export default [
     (match) => {
@@ -231,7 +270,7 @@ export default [
                 <h1>事件绑定</h1>
 
                 <div className={ "sections" }>
-                    <section className={ "next" }>
+                    <section className={ "next b100" }>
                         <pre>
                             <p>
                                 {
@@ -241,7 +280,7 @@ export default [
                         </pre>
                     </section>
 
-                    <section className={ "next" }>
+                    <section className={ "next b100" }>
                         通过事件绑定，我们需要得到上个例子中的三个数据
 
                         <pre style={{ textAlign: "center" }}>
@@ -352,7 +391,7 @@ export default [
     (match) => {
         return (
             <div className={"page page-" + Number(match.location.pathname.slice(1))}>
-                <h1 className={ "hover-shake" } onDoubleClick={ e => e.target.classList.toggle("hover-shake") }>组件化</h1>
+                <h1>实现</h1>
 
                 <div className={ "sections" }>
                     <section className={ "next b100" }>
@@ -363,14 +402,12 @@ export default [
 
                     <section className={ "next b100" }>
                         <p>
-                            方案一：原生 dom 写好 create node，delete node 等，封库
+                            方案一：原生 dom 写好 createNode()，deleteNode() 等，封库
                         </p>
                     </section>
 
-                    <section className={ "next b100" }>
-                        <p>
-                            方案二：逆向思维，由结果反推
-                        </p>
+                    <section className={ "next b100 replaceAll" }>
+                        <img src={ require("@/css/images/create-tree-by-lib.jpeg") } />
                     </section>
                 </div>
             </div>
@@ -384,7 +421,7 @@ export default [
                 <div className={ "sections" }>
                     <section className={ "next column" }>
                         <h3>
-                            有点：
+                            优点：
                         </h3>
                         <ul>
                             <li>
@@ -402,7 +439,7 @@ export default [
                         </h3>
                         <ul>
                             <li>
-                                难以维护
+                                难以维护（容易形成堆积木）
                             </li>
                             <li>
                                 <p className={ "tooltip" } data-label={ "（例如：map 过大（任务过多）时，想根据 list 的 id 动态获取 map 内容，\r\n如果库内没有封装相应方法，很难开发新功能" }>
@@ -412,10 +449,371 @@ export default [
                             <li>
                                 库一般为全局变量，可能会被覆盖、污染
                             </li>
+                            <li>
+                                阻塞其他程序运行
+                            </li>
+                            <li>
+                                同页面多实例的维护
+                            </li>
                         </ul>
                     </section>
                 </div>
             </div>
         )
-    }
-]
+    },
+
+    (match) => {
+        return (
+            <div className={"page page-" + Number(match.location.pathname.slice(1))}>
+                <h1 className={ "shake-crazy hover-shake" } onDoubleClick={ e => e.target.classList.toggle("shake-crazy") }>组件化</h1>
+
+                <div className={ "sections" }>
+                    <section className={ "next column" }>
+                        <h3>
+                            先说一下模块化编程
+                        </h3>
+                        <ul>
+                            <li>模块是一段 JavaScript 代码，具有统一的基本书写格式</li>
+                            <li>模块之间通过基本交互规则，能彼此引用，协同工作。</li>
+                        </ul>
+                    </section>
+
+                    <section className={ "next column" }>
+                        <h3>
+                            细节
+                        </h3>
+                        <ul>
+                            <li>主要依靠后端渲染，js 负责页面逻辑</li>
+                            <li>通过页面对不同模块引入，</li>
+                        </ul>
+                    </section>
+                </div>
+            </div>
+        )
+    },
+
+    (match) => {
+        return (
+            <div className={"page page-" + Number(match.location.pathname.slice(1))}>
+                <h1>模块化</h1>
+
+                <div className={ "sections no-margin" }>
+                    <section className={ "next column" }>
+                        <img src={ require("@/css/images/modules.jpeg") } />
+                    </section>
+                </div>
+            </div>
+        )
+    },
+
+
+    (match) => {
+        return (
+            <div className={"page page-" + Number(match.location.pathname.slice(1))}>
+                <div className={ "knock-down-overlay" }>
+
+                    <h1 className={ "shake-crazy shake-constant hover-shake" } onDoubleClick={ e => {
+                        e.target.classList.remove("shake-crazy");
+                        let target = e.target;
+
+                        function t(target) {
+                            target.classList.add("knock-down");
+                        }
+
+                        if(e.target.classList.contains("knock-down")) {
+                            target.classList.remove("knock-down");
+                        }else {
+                            setTimeout(() => {
+                                t(target);
+                            }, 10);
+                        }
+                    } }>组件化</h1>
+                </div>
+
+                <div className={ "sections" }>
+                    <section className={ "next column" }>
+                        <h3>
+                            官方定义
+                        </h3>
+                        <ul>
+                            <li>Custom Element: 自定义HTML元素</li>
+                            <li>shadow DOM: 封装</li>
+                            <li>HTML Imports: 打包一切</li>
+                            <li>HTML Template: Lazy的DOM模板</li>
+                        </ul>
+                    </section>
+
+                    <section className={ "next column" }>
+                        <h3>
+                            简单来说
+                        </h3>
+
+                        <img src={ require("@/css/images/components.png") } />
+
+                        { "把图形、非图形的各种逻辑均抽象为一个统一的概念（组件）来实现开发的模式" }
+                    </section>
+                </div>
+            </div>
+        )
+    },
+
+    (match) => {
+        return (
+            <div className={"page page-" + Number(match.location.pathname.slice(1))}>
+                <h1>关于 dom</h1>
+
+                <div className={ "sections no-margin" }>
+                    <section className={ "next b100" }>
+                        <p>注意到，当我们需要实现拖拽后的逻辑时</p>
+                        <p>我们必须手动操作 dom</p>
+                    </section>
+
+                    <section className={ "next b100" }>
+                        <img src={ require("@/css/images/operate-dom.jpeg") } style={{ width: "75%" }} />
+                    </section>
+                </div>
+            </div>
+        )
+    },
+
+    (match) => {
+        return (
+            <div className={"page page-" + Number(match.location.pathname.slice(1))}>
+                <h1>看一下 react 的简单实现：</h1>
+
+                <div className={ "sections no-margin" }>
+
+                    <section className={ "next b100" }>
+                        <Counter />
+                    </section>
+
+                    <section className={ "next b100" }>
+                        <img src={ require("@/css/images/react-counter.jpeg") } style={{ width: "75%" }} />
+                    </section>
+                </div>
+            </div>
+        )
+    },
+
+    (match) => {
+        return (
+            <div className={"page page-" + Number(match.location.pathname.slice(1))}>
+                <h1>组件化框架</h1>
+
+                <div className={ "sections" }>
+                    <section className={ "next column" }>
+                        <h3>
+                            解决的核心问题
+                        </h3>
+                        <ul>
+                            <li>帮助我们使用 state 维护 dom</li>
+                            <li>单页面内复杂逻辑实现</li>
+                            <li>完整的生命周期</li>
+                            <li>强制组件化思维</li>
+                        </ul>
+                    </section>
+
+                    <section className={ "next column" }>
+                        <img src={ require("@/css/images/vue-components.jpeg") } style={{ width: "75%" }} />
+                    </section>
+
+                    <section className={ "next column" }>
+                        <img src={ require("@/css/images/react-lifecycle.jpg") } style={{ width: "75%" }} />
+                    </section>
+                </div>
+            </div>
+        )
+    },
+
+    class DragDemoUsingLib extends React.Component {
+        constructor() {
+            super();
+
+            this.state = {
+                loading: true
+            };
+
+            this.tree = null;
+
+            this.selectedId = null;
+            this.targetId = null;
+            this.type = null;
+            this.projectId = 21;
+
+
+            this.handleAddTask = this.handleAddTask.bind(this);
+            this.handleDeleteTask = this.handleDeleteTask.bind(this);
+            this._renderDataFromServer = this._renderDataFromServer.bind(this);
+        }
+
+        componentWillMount() {
+            this._renderDataFromServer();
+        }
+
+        _renderDataFromServer() {
+            let getAllUrl = 'http://59.110.242.31:8087/teamday-web/1/task/getTaskAll';
+
+            let params = {
+                projectId: this.projectId
+            };
+
+            request(getAllUrl, params).then((data) => {
+
+                console.log(data);
+
+                this.setState({
+                    loading: false
+                }, () => {
+                    let { taskCodeList, taskList } = data;
+
+
+                    let mapArray = taskList.map(task => {
+                        return [
+                            task.taskId, {
+                                ...task,
+                                children: task.childList,
+                                data: `<div class='task'>${task.taskName}</div>`,
+                                id: task.taskId
+                            }
+                        ]
+                    });
+
+                    this.tree = DraggableTree.create({
+                        map: new Map(mapArray),
+                        list: taskCodeList,
+                        mountDom: "#task-layers",
+                        // multiSelect: true,
+
+
+                        beforeDrop: (dragId, targetId, type) => {
+                            console.log(dragId, targetId, type);
+
+                            this.__moveTaskByServer(dragId, targetId, type);
+
+                            return new Promise(resolve => {
+                                setTimeout(resolve, 5000);
+                            });
+                        }
+                    });
+
+
+                    this.tree.setEvents({
+                        changed: function (actionType) {
+                            console.log(arguments);
+                        },
+
+                        click: (id) => {
+                            this.selectedId = id;
+                        },
+
+                        drop: (dragId, targetId, type) => {
+                            console.log(dragId, targetId, type);
+                        }
+                    });
+                });
+
+            });
+        }
+
+        __moveTaskByServer(moveId, targetId, type) {
+            let params = {
+                moveId,
+                targetId,
+                moveType: Number(type) - 1
+            },
+                moveTaskUrl = 'http://59.110.242.31:8087/teamday-web/1/task/moveTask';
+
+            this.setState({
+                loading: true
+            },
+                () => {
+                    request(moveTaskUrl, params).then(data => {
+                        console.log(data);
+                    })
+                });
+        }
+
+        handleAddTask(top = false) {
+            console.log(this.selectedId);
+
+            if(top || this.selectedId) {
+                let newTask = {
+                    projectId: this.projectId,
+                    taskName: top ? "一个顶层任务" : "一个子任务",
+                    taskUser: 1
+                };
+
+                if(top) {
+                    delete newTask.taskParent;
+                }
+
+                let createTaskUrl = 'http://59.110.242.31:8087/teamday-web/1/task/save';
+
+                request(createTaskUrl, newTask).then(data => {
+                    console.log(data);
+                })
+            }
+        }
+
+        handleDeleteTask() {
+            if(this.selectedId) {
+                let params = {
+                    taskUser: 1,
+                    taskId: this.selectedId
+                };
+
+                let deleteTaskUrl = 'http://59.110.242.31:8087/teamday-web/1/task/remove';
+
+                request(deleteTaskUrl, params).then(data => {
+                    console.log(data);
+                })
+            }
+        }
+
+        render() {
+
+            if(this.state.loading) {
+                return (
+                    <div style={{ marginTop: 100, textAlign: 'center' }}>
+                        <h2>
+                            Loading...
+                        </h2>
+                    </div>
+                )
+            }
+            return (
+                <div style={{ marginTop: 100, textAlign: 'center', userSelect: 'none' }}>
+                    <div className={ "tasks" } id={ "task-layers" }>
+
+                    </div>
+
+                    <div className={ "control-panel" }>
+                        <button onClick={ this.handleAddTask.bind(this, true) }>
+                            添加顶级任务
+                        </button>
+                        <button onClick={ this.handleAddTask.bind(this, false) }>
+                            为选中添加任务
+                        </button>
+                        <button onClick={ this.handleDeleteTask }>
+                            删除选中任务
+                        </button>
+                    </div>
+                </div>
+            )
+        }
+    },
+
+    (match) => {
+        return (
+            <div className={"page page-" + Number(match.location.pathname.slice(1))}>
+                <h1>Live Demo</h1>
+
+                <div className={ "sections no-margin" }>
+                    <iframe src={ "localhost:8081" }>
+
+                    </iframe>
+                </div>
+            </div>
+        )
+    },
+];

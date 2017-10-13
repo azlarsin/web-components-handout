@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAaA;;0DAAU;EAAE,oBAAoB,EAAE,MAAM;;AACxC;kCAAU;EAAE,oBAAoB,EAAE,OAAO",
+"sources": ["css-shake.scss"],
+"names": [],
+"file": "css-shake.css"
+}

@@ -16,9 +16,6 @@ class Ripple extends React.Component {
 
 
         setTimeout(() => {
-
-            console.log(this.props.id);
-
             this.refs.d.classList.add("ripple-animate");
         }, 0);
     }
@@ -27,8 +24,6 @@ class Ripple extends React.Component {
         let { clearRipple } = this.context;
 
         clearRipple(this.props.id);
-
-        console.log("leave", this.props.id);
     }
 
     render() {
