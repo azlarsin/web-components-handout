@@ -11,7 +11,9 @@ class Counter extends React.Component {
         super();
 
         this.state = {
-            count: 0
+            count: 0,
+            count1: 0,
+            count2: 0
         };
 
         this.handleClick = this.handleClick.bind(this);
@@ -648,6 +650,7 @@ export default [
 
         componentWillMount() {
             this._renderDataFromServer();
+
         }
 
         _renderDataFromServer() {
@@ -664,8 +667,8 @@ export default [
                 this.setState({
                     loading: false
                 }, () => {
-                    let { taskCodeList, taskList } = data;
 
+                    let { taskCodeList, taskList } = data;
 
                     let mapArray = taskList.map(task => {
                         return [
@@ -673,7 +676,8 @@ export default [
                                 ...task,
                                 children: task.childList,
                                 data: `<div class='task'>${task.taskName}</div>`,
-                                id: task.taskId
+                                id: task.taskId,
+                                parentId: task.taskParent ? task.taskParent : null
                             }
                         ]
                     });
@@ -716,6 +720,10 @@ export default [
         }
 
         __moveTaskByServer(moveId, targetId, type) {
+            if(moveId === targetId) {
+                return false;
+            }
+
             let params = {
                 moveId,
                 targetId,
@@ -729,6 +737,9 @@ export default [
                 () => {
                     request(moveTaskUrl, params).then(data => {
                         console.log(data);
+
+                        // this.tree.empty();
+                        this._renderDataFromServer();
                     })
                 });
         }
@@ -751,6 +762,9 @@ export default [
 
                 request(createTaskUrl, newTask).then(data => {
                     console.log(data);
+
+                    this.tree.empty();
+                    this._renderDataFromServer();
                 })
             }
         }
@@ -766,6 +780,9 @@ export default [
 
                 request(deleteTaskUrl, params).then(data => {
                     console.log(data);
+
+                    this.tree.empty();
+                    this._renderDataFromServer();
                 })
             }
         }
@@ -806,13 +823,7 @@ export default [
     (match) => {
         return (
             <div className={"page page-" + Number(match.location.pathname.slice(1))}>
-                <h1>Live Demo</h1>
-
-                <div className={ "sections no-margin" }>
-                    <iframe src={ "localhost:8081" }>
-
-                    </iframe>
-                </div>
+                <h1>Thanks</h1>
             </div>
         )
     },

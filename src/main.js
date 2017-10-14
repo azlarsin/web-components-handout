@@ -154,7 +154,7 @@ class App extends React.Component {
 
                 <div className={ "content" } ref={ "content" }>
                     <Route exact={ true } path={ '/' } render={ () => (
-                        <h1>~~</h1>
+                        <h1>web 组件化</h1>
                     ) } />
 
                     {
