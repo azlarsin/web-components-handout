@@ -39,10 +39,6 @@ export const request = async (api, params, needTk = true) => {
     }
 };
 
-
-export const requestJsonP = function () {
-};
-
 /**
  * copy to clipboard
  * from: https://stackoverflow.com/questions/22581345/click-button-copy-to-clipboard-using-jquery

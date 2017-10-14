@@ -135,12 +135,6 @@ class App extends React.Component {
             }
         }
 
-        // // clear all ripple
-        // setTimeout(() => {
-        //     this.setState({
-        //         ripples: new Map()
-        //     })
-        // }, 2000);
     }
 
     render() {
